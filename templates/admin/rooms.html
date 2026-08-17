@@ -1,0 +1,72 @@
+{% extends 'admin/_shell.html' %}
+{% block title %}Manage Rooms{% endblock %}
+
+{% block admin_content %}
+
+<section class="page-header" style="padding:0 0 30px;">
+    <div class="header-flex">
+        <div>
+            <h1>Room Management</h1>
+            <p>View, add, edit and remove hotel rooms.</p>
+        </div>
+        <a href="{% url 'admin_room_add' %}" class="btn-primary">
+            <i class="fas fa-plus"></i> Add Room
+        </a>
+    </div>
+</section>
+
+<div class="table-card">
+
+    <div class="table-top">
+        <form method="GET">
+            <input type="text" name="search" placeholder="Search room, hotel, type..." value="{{ search }}">
+            <button class="btn-primary">Search</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Hotel</th>
+                <th>Room No.</th>
+                <th>Type</th>
+                <th>Floor</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room.hotel.name }}</td>
+                <td>{{ room.room_number }}</td>
+                <td>{{ room.room_type.name }}</td>
+                <td>{{ room.floor }}</td>
+                <td>
+                    {% if room.status == "available" %}
+                        <span class="badge badge-success">Available</span>
+                    {% elif room.status == "occupied" %}
+                        <span class="badge badge-danger">Occupied</span>
+                    {% elif room.status == "cleaning" %}
+                        <span class="badge badge-warning">Cleaning</span>
+                    {% else %}
+                        <span class="badge">Maintenance</span>
+                    {% endif %}
+                </td>
+                <td>₹ {{ room.price }}</td>
+                <td>
+                    <a href="{% url 'room_detail' room.id %}" class="view-btn">View</a>
+                    <a href="{% url 'admin_room_edit' room.id %}" class="edit-btn">Edit</a>
+                    <a href="{% url 'admin_room_delete' room.id %}" class="delete-btn">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7">No rooms found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

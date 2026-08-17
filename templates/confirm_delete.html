@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title|default:"Delete" }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/delete.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="delete-section">
+
+    <div class="container">
+
+        <div class="delete-card">
+
+            <div class="delete-icon">
+                <i class="fas fa-trash-alt"></i>
+            </div>
+
+            <h2>{{ title|default:"Delete Item" }}</h2>
+            <p>{{ subtitle|default:"Are you sure you want to delete this? This cannot be undone." }}</p>
+
+            {% if object_display %}
+            <div class="room-info">
+                {% for line in object_display %}
+                <p><strong>{{ line.0 }} :</strong> {{ line.1 }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="delete-buttons">
+                    <a href="{{ cancel_url|default:'/' }}" class="btn-secondary">Cancel</a>
+                    <button type="submit" class="btn-danger">Delete</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'admin/_shell.html' %}
+{% block title %}Housekeeping{% endblock %}
+
+{% block admin_content %}
+
+<section class="page-header" style="padding:0 0 30px;">
+    <div class="header-flex">
+        <div>
+            <h1>Housekeeping</h1>
+            <p>Track cleaning and maintenance tasks for every room.</p>
+        </div>
+        <a href="{% url 'admin_housekeeping_add' %}" class="btn-primary">
+            <i class="fas fa-plus"></i> Add Task
+        </a>
+    </div>
+</section>
+
+<div class="table-card">
+
+    <div class="table-top">
+        <form method="GET">
+            <input type="text" name="search" placeholder="Search room, staff..." value="{{ search }}">
+            <button class="btn-primary">Search</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Room</th>
+                <th>Assigned To</th>
+                <th>Status</th>
+                <th>Remarks</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task.room.hotel.name }} - {{ task.room.room_number }}</td>
+                <td>{{ task.staff_name|default:"Unassigned" }}</td>
+                <td>
+                    {% if task.status == "done" %}
+                        <span class="badge badge-success">Done</span>
+                    {% elif task.status == "in_progress" %}
+                        <span class="badge badge-warning">In Progress</span>
+                    {% else %}
+                        <span class="badge badge-pending">Pending</span>
+                    {% endif %}
+                </td>
+                <td>{{ task.remarks|default:"—"|truncatewords:8 }}</td>
+                <td>{{ task.updated_at|date:"d M, H:i" }}</td>
+                <td>
+                    <a href="{% url 'admin_housekeeping_edit' task.id %}" class="edit-btn">Edit</a>
+                    <a href="{% url 'admin_housekeeping_delete' task.id %}" class="delete-btn">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No housekeeping tasks found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

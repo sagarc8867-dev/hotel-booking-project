@@ -1,0 +1,85 @@
+{% extends 'admin/_shell.html' %}
+{% block title %}Manage Reservations{% endblock %}
+
+{% block admin_content %}
+
+<section class="page-header" style="padding:0 0 30px;">
+    <div class="header-flex">
+        <div>
+            <h1>Reservation Management</h1>
+            <p>Track bookings and update their status.</p>
+        </div>
+    </div>
+</section>
+
+<div class="table-card">
+
+    <div class="table-top">
+        <form method="GET">
+            <input type="text" name="search" placeholder="Search guest, room, hotel..." value="{{ search }}">
+            <button class="btn-primary">Search</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Guest</th>
+                <th>Hotel / Room</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reservations %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.guest }}</td>
+                <td>{{ r.room.hotel.name }} - {{ r.room.room_number }}</td>
+                <td>{{ r.check_in_date }}</td>
+                <td>{{ r.check_out_date }}</td>
+                <td>₹{{ r.room_charges }}</td>
+                <td><span class="badge badge-{{ r.status }}">{{ r.get_status_display }}</span></td>
+                <td>
+                    <div class="status-actions">
+                        {% if r.status == 'pending' %}
+                        <form method="post" action="{% url 'admin_reservation_status' r.id 'confirmed' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="mini-btn confirm">Confirm</button>
+                        </form>
+                        {% endif %}
+                        {% if r.status == 'confirmed' %}
+                        <form method="post" action="{% url 'admin_reservation_status' r.id 'checked_in' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="mini-btn checkin">Check-In</button>
+                        </form>
+                        {% endif %}
+                        {% if r.status == 'checked_in' %}
+                        <form method="post" action="{% url 'admin_reservation_status' r.id 'checked_out' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="mini-btn checkout">Check-Out</button>
+                        </form>
+                        {% endif %}
+                        {% if r.status == 'pending' or r.status == 'confirmed' %}
+                        <form method="post" action="{% url 'admin_reservation_status' r.id 'cancelled' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="mini-btn cancel">Cancel</button>
+                        </form>
+                        {% endif %}
+                        <a href="{% url 'admin_reservation_delete' r.id %}" class="delete-btn">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="8">No reservations found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

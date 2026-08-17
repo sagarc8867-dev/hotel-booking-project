@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Room Details{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="detail-section">
+
+    <div class="container">
+
+        <div class="detail-card">
+
+            <div class="detail-image">
+
+{% if room.id|divisibleby:3 %}
+    <img src="{% static 'images/rooms/room3.jpg' %}" alt="Room {{ room.room_number }}">
+{% elif room.id|divisibleby:2 %}
+    <img src="{% static 'images/rooms/room2.jpg' %}" alt="Room {{ room.room_number }}">
+{% else %}
+    <img src="{% static 'images/rooms/room1.jpg' %}" alt="Room {{ room.room_number }}">
+{% endif %}
+
+            </div>
+
+            <div class="detail-content">
+
+                <h1>{{ room.hotel.name }}</h1>
+
+                <p class="room-number">
+                    Room {{ room.room_number }}
+                </p>
+
+                <div class="detail-grid">
+
+                    <div class="detail-item">
+                        <span>Room Type</span>
+                        <strong>{{ room.room_type.name }}</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Capacity</span>
+                        <strong>{{ room.room_type.capacity }} Guests</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Floor</span>
+                        <strong>{{ room.floor }}</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Price</span>
+                        <strong>₹{{ room.price }} / night</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Status</span>
+
+                        {% if room.status == 'available' %}
+                            <strong class="available">Available</strong>
+                        {% elif room.status == 'occupied' %}
+                            <strong class="occupied">Occupied</strong>
+                        {% elif room.status == 'cleaning' %}
+                            <strong class="cleaning">Cleaning</strong>
+                        {% else %}
+                            <strong class="maintenance">Maintenance</strong>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                <h3>Amenities</h3>
+
+                <ul class="amenities">
+
+                    {% for item in room.room_type.amenities %}
+                        <li>{{ item }}</li>
+                    {% empty %}
+                        <li>No amenities available.</li>
+                    {% endfor %}
+
+                </ul>
+
+                <div class="detail-buttons">
+
+                    {% if room.status == 'available' %}
+                    <a href="{% url 'booking_form' room.id %}" class="btn-primary">
+                        Book Now
+                    </a>
+                    {% endif %}
+
+                    <a href="{% url 'search_rooms' %}" class="btn-secondary">
+                        Back to Search
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Royal Stay — Where Royal Comfort Meets Modern Luxury{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Banner -->
+<section class="hero">
+  <div class="hero-subtitle">EXPERIENCE TRUE LUXURY</div>
+  <h1 class="serif-font">Welcome to<br>Royal Stay</h1>
+  <p class="hero-desc">Where Royal Comfort Meets Modern Luxury</p>
+  <div class="hero-buttons">
+    <a href="{% url 'search_rooms' %}" class="btn-hero-primary" style="text-decoration:none;">
+      Book Your Stay <i class="fa-solid fa-arrow-right"></i>
+    </a>
+    <a href="#gallery" class="btn-hero-video" style="text-decoration:none;">
+      <i class="fa-solid fa-circle-play"></i> Watch Tour
+    </a>
+  </div>
+</section>
+
+<!-- Floating Booking Widget -->
+<div class="booking-container">
+  <form action="{% url 'search_rooms' %}" method="GET" class="booking-bar">
+    <div class="input-box">
+      <i class="fa-regular fa-calendar"></i>
+      <div>
+        <label>Check In</label>
+     <input type="date" name="check_in" id="id_check_in" min="{% now 'Y-m-d' %}" required>
+      </div>
+    </div>
+    <div class="input-box">
+      <i class="fa-regular fa-calendar"></i>
+      <div>
+        <label>Check Out</label>
+      <input type="date" name="check_out" id="id_check_out" min="{% now 'Y-m-d' %}" required>
+      </div>
+    </div>
+    <div class="input-box">
+      <i class="fa-solid fa-user-group"></i>
+      <div>
+        <label>Guests</label>
+        <select name="guests">
+          <option value="1">1 Guest</option>
+          <option value="2" selected>2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+        </select>
+      </div>
+    </div>
+    <div class="input-box">
+      <i class="fa-solid fa-map-marker-alt"></i>
+      <div>
+        <label>City</label>
+        <input type="text" name="city" placeholder="Where to?">
+      </div>
+    </div>
+    <button type="submit" class="btn-search">
+      <i class="fa-solid fa-magnifying-glass"></i> Search Rooms
+    </button>
+  </form>
+</div>
+
+<!-- Amenities / Categories Section -->
+<section class="categories" id="amenities">
+  <div class="cat-item">
+    <div class="cat-icon"><i class="fa-solid fa-bed"></i></div>
+    <strong>Luxury Rooms</strong>
+  </div>
+  <div class="cat-item">
+    <div class="cat-icon"><i class="fa-solid fa-utensils"></i></div>
+    <strong>Fine Dining</strong>
+  </div>
+  <div class="cat-item">
+    <div class="cat-icon"><i class="fa-solid fa-person-swimming"></i></div>
+    <strong>Swimming Pool</strong>
+  </div>
+  <div class="cat-item">
+    <div class="cat-icon"><i class="fa-solid fa-dumbbell"></i></div>
+    <strong>Modern Gym</strong>
+  </div>
+  <div class="cat-item">
+    <div class="cat-icon"><i class="fa-solid fa-spa"></i></div>
+    <strong>Spa &amp; Wellness</strong>
+  </div>
+</section>
+
+<!-- Featured Rooms Section -->
+<section style="margin-bottom: 60px;">
+  <div class="section-header">
+    <h2 class="serif-font">Featured Rooms</h2>
+    <p>Experience unparalleled comfort &amp; elegance</p>
+    <a href="{% url 'search_rooms' %}" class="view-all-link">View All Rooms <i class="fa-solid fa-arrow-right"></i></a>
+  </div>
+
+  <div class="rooms-wrapper">
+    <div class="rooms-grid">
+      {% for room in featured_rooms %}
+{% if room.room_type.name|lower == "single" %}
+    {% static "images/rooms/room1.jpg" as room_img %}
+{% elif room.room_type.name|lower == "double" %}
+    {% static "images/rooms/room4.jpg" as room_img %}
+{% elif room.room_type.name|lower == "deluxe" %}
+    {% static "images/rooms/room3.jpg" as room_img %}
+{% elif room.room_type.name|lower == "suite" %}
+    {% static "images/rooms/room2.jpg" as room_img %}
+{% else %}
+    {% static "images/rooms/room1.jpg" as room_img %}
+{% endif %}
+        <div class="room-card">
+         <img src="{{ room_img }}" alt="{{ room.room_type.name }}">
+          <div class="room-card-content">
+            <h3>{{ room.room_type.name }}</h3>
+            <div class="room-specs">
+              <span><i class="fa-solid fa-user"></i> {{ room.room_type.capacity }} Guests</span>
+              <span><i class="fa-solid fa-hotel"></i> {{ room.hotel.city }}</span>
+              <span><i class="fa-solid fa-layer-group"></i> Floor {{ room.floor }}</span>
+            </div>
+            <div class="room-card-footer">
+              <div class="price"><span>₹{{ room.price }}</span> <small>/ night</small></div>
+              <a href="{% url 'room_detail' room.id %}" class="btn-card-book">Book Now <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p style="grid-column:1/-1;text-align:center;color:var(--text-muted, #64748B);">
+          No rooms are set up yet — add some from the
+          <a href="{% url 'admin_room_add' %}">staff dashboard</a>.
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us & Testimonial Section -->
+<section class="features-section" id="about">
+  <div class="section-header" style="margin-bottom: 25px;">
+    <h2 class="serif-font">Why Choose Royal Stay?</h2>
+  </div>
+
+  <div class="features-row">
+    <div class="features-list">
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fa-regular fa-star"></i></div>
+        <div class="feature-text">
+          <h4>5-Star Experience</h4>
+          <p>World-class hospitality</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="feature-text">
+          <h4>100% Safe &amp; Secure</h4>
+          <p>Hassle-free booking</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="feature-text">
+          <h4>Prime Location</h4>
+          <p>Heart of the city</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fa-regular fa-heart"></i></div>
+        <div class="feature-text">
+          <h4>Guest First</h4>
+          <p>Your comfort is our priority</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side Dark Testimonial Box -->
+    <div class="testimonial-card">
+      <div class="quote-icon"><i class="fa-solid fa-quote-right"></i></div>
+      <div class="testimonial-avatar"><i class="fa-solid fa-user"></i></div>
+      <div class="testimonial-text">
+        <p>"An unforgettable stay! Royal Stay exceeded all our expectations. The service, rooms and restaurant were amazing."</p>
+        <small>- Sarah Johnson</small>
+        <div class="stars">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Glimpses Gallery -->
+<div class="section-header" style="margin-bottom: 20px;">
+  <h2 class="serif-font">Glimpses of Royal Stay</h2>
+</div>
+
+<div class="gallery-grid" id="gallery">
+  <div class="gallery-item">
+    <img src="{% static 'images/facilities/facilities1.jpg' %}" alt="Lobby">
+    <div class="gallery-badge">Lobby</div>
+  </div>
+  <div class="gallery-item">
+    <img src="{% static 'images/facilities/facilities2.jpg' %}" alt="Lounge">
+    <div class="gallery-badge">Lounge</div>
+  </div>
+  <div class="gallery-item">
+    <img src="{% static 'images/facilities/facilities3.jpg' %}" alt="Restaurant">
+    <div class="gallery-badge">Restaurant</div>
+  </div>
+  <div class="gallery-item">
+    <img src="{% static 'images/hotels/hotel1.jpg' %}" alt="Hotel Exterior">
+    <div class="gallery-badge">Exterior</div>
+  </div>
+</div>
+
+{% endblock %}

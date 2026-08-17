@@ -1,0 +1,260 @@
+/* =====================================================
+   ROYAL STAY — GLOBAL THEME
+   Overrides the base blue palette with the gold/navy
+   brand, and provides the site-wide navbar + footer
+   used on every page (via base.html).
+====================================================== */
+
+:root{
+
+    /* Brand palette (overrides base.css blue) */
+    --primary:#C9922E;
+    --primary-dark:#A6741F;
+    --primary-light:#FBF1DF;
+
+    --gold-main:#E5A83B;
+    --gold-hover:#D4952B;
+    --navy-dark:#080E1E;
+    --navy-nav:#0A1224;
+    --navy-card:#0F172A;
+
+    --dark:#0A1224;
+}
+
+body{
+    font-family:'Plus Jakarta Sans', 'Poppins', sans-serif;
+}
+
+h1, h2, h3{
+    font-family:'Playfair Display', serif;
+}
+
+.text-danger{ color:#E11D48 !important; }
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    background-color:var(--navy-nav);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 60px;
+    color:#fff;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.brand-logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand-logo i{
+    color:var(--gold-main);
+    font-size:30px;
+}
+
+.brand-text h2{
+    font-size:21px;
+    letter-spacing:1.5px;
+    color:#fff;
+    font-family:'Playfair Display', serif;
+}
+
+.brand-text span{
+    font-size:9px;
+    letter-spacing:2.5px;
+    color:#94A3B8;
+    display:block;
+}
+
+.nav-menu{
+    display:flex;
+    list-style:none;
+    gap:26px;
+    margin:0;
+    padding:0;
+}
+
+.nav-menu a{
+    color:#CBD5E1;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:500;
+    transition:color 0.2s;
+}
+
+.nav-menu a.active, .nav-menu a:hover{
+    color:var(--gold-main);
+    border-bottom:2px solid var(--gold-main);
+    padding-bottom:2px;
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.btn-book-nav{
+    background-color:var(--gold-main);
+    color:#0F172A;
+    border:none;
+    padding:11px 22px;
+    border-radius:6px;
+    font-weight:700;
+    font-size:14px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.btn-book-nav:hover{
+    background-color:var(--gold-hover);
+}
+
+/* ---------- User dropdown ---------- */
+
+.user-dropdown-container{
+    position:relative;
+}
+
+.user-menu-btn{
+    background:transparent;
+    border:none;
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.user-dropdown-menu{
+    display:none;
+    position:absolute;
+    right:0;
+    top:40px;
+    background-color:#fff;
+    min-width:240px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    border-radius:8px;
+    padding:10px 0;
+    z-index:1100;
+}
+
+.user-dropdown-menu.show{
+    display:block;
+}
+
+.dropdown-header{
+    padding:8px 16px;
+}
+
+.dropdown-header strong{
+    display:block;
+    font-size:14px;
+    color:var(--text);
+}
+
+.dropdown-header small{
+    font-size:12px;
+    color:var(--muted);
+}
+
+.user-dropdown-menu hr{
+    border:0;
+    border-top:1px solid var(--border);
+    margin:6px 0;
+}
+
+.user-dropdown-menu a{
+    color:var(--text);
+    padding:10px 16px;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:14px;
+}
+
+.user-dropdown-menu a:hover{
+    background-color:#F1F5F9;
+    color:var(--gold-hover);
+}
+
+@media(max-width:900px){
+    .navbar{ padding:14px 20px; flex-wrap:wrap; gap:12px; }
+    .nav-menu{ display:none; }
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:var(--navy-dark);
+    color:#CBD5E1;
+    padding:70px 0 0;
+}
+
+footer .footer-container{
+    max-width:1280px;
+    margin:0 auto;
+    padding:0 40px 40px;
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr;
+    gap:40px;
+}
+
+footer .footer-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:14px;
+}
+
+footer .footer-brand i{
+    color:var(--gold-main);
+    font-size:24px;
+}
+
+footer .footer-brand span{
+    font-family:'Playfair Display', serif;
+    font-size:20px;
+    letter-spacing:1px;
+    color:#fff;
+}
+
+footer h3, footer h4{
+    color:#fff;
+    font-family:'Playfair Display', serif;
+    margin-bottom:16px;
+    font-size:19px;
+}
+
+footer p{
+    font-size:14px;
+    line-height:1.8;
+    color:#94A3B8;
+}
+
+footer a{
+    display:block;
+    color:#94A3B8;
+    text-decoration:none;
+    font-size:14px;
+    margin-bottom:12px;
+    transition:.2s;
+}
+
+footer a:hover{
+    color:var(--gold-main);
+}
+
+footer .copyright{
+    border-top:1px solid rgba(255,255,255,0.08);
+    text-align:center;
+    padding:20px;
+    font-size:12px;
+    color:#64748B;
+}

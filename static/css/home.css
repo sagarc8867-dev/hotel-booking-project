@@ -1,0 +1,448 @@
+/* =====================================================
+   ROYAL STAY — HOME PAGE
+   Hero, booking bar, amenity icons, featured rooms,
+   "why choose us" + testimonial, and gallery strip.
+   (Navbar/footer/colors live in theme.css — loaded on
+   every page — so they aren't repeated here.)
+====================================================== */
+
+/* HERO SECTION */
+.hero {
+  position: relative;
+  background-color: #080E1E;
+  background-image: linear-gradient(rgba(8, 14, 30, 0.45), rgba(8, 14, 30, 0.45)), url('/static/images/hero/hero1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 620px;
+  padding: 0 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+}
+
+.hero-subtitle {
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: #E2E8F0;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-size: 68px;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.hero-desc {
+  font-size: 19px;
+  color: #E2E8F0;
+  margin-bottom: 32px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.btn-hero-primary {
+  background-color: var(--gold-main);
+  color: #0F172A;
+  border: none;
+  padding: 15px 32px;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-hero-video {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  padding: 14px 26px;
+  border-radius: 24px;
+  font-size: 16px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* FLOATING BOOKING BAR */
+.booking-container {
+  position: relative;
+  max-width: 1280px;
+  margin: -45px auto 60px;
+  padding: 0 20px;
+  z-index: 10;
+}
+
+.booking-bar {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 26px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 14px;
+}
+
+.input-box {
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.input-box i {
+  color: #64748B;
+  font-size: 19px;
+}
+
+.input-box label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.input-box input, .input-box select {
+  border: none;
+  outline: none;
+  font-weight: 600;
+  color: var(--text-dark);
+  width: 100%;
+  font-size: 15px;
+  background: transparent;
+}
+
+.btn-search {
+  background-color: var(--gold-main);
+  border: none;
+  border-radius: 10px;
+  color: #0F172A;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 0 34px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* CATEGORY QUICK LINKS */
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 75px;
+  margin-bottom: 65px;
+  flex-wrap: wrap;
+}
+
+.cat-item {
+  text-align: center;
+}
+
+.cat-icon {
+  width: 76px;
+  height: 76px;
+  background-color: #F1F5F9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  color: var(--navy-dark);
+  font-size: 28px;
+}
+
+.cat-item strong {
+  font-size: 15px;
+  color: var(--text-dark);
+}
+
+/* FEATURED ROOMS SECTION */
+.section-header {
+  text-align: center;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.section-header h2 {
+  font-size: 36px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-header h2::before, .section-header h2::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 55px;
+  height: 1px;
+  background-color: var(--gold-main);
+}
+
+.section-header h2::before { left: -75px; }
+.section-header h2::after { right: -75px; }
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.view-all-link {
+  position: absolute;
+  right: 60px;
+  top: 14px;
+  color: var(--gold-main);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.rooms-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.room-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  border: 1px solid var(--border-light);
+}
+
+.room-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.room-card-content {
+  padding: 20px;
+}
+
+.room-card-content h3 {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.room-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.room-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #F1F5F9;
+  padding-top: 14px;
+}
+
+.price span {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.price small {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.btn-card-book {
+  background-color: var(--navy-card);
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* WHY CHOOSE US & TESTIMONIAL */
+.features-section {
+  max-width: 1400px;
+  margin: 75px auto;
+  padding: 0 60px;
+}
+
+.features-row {
+  display: grid;
+  grid-template-columns: 2fr 1.1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--navy-dark);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.feature-text h4 {
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.feature-text p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.testimonial-card {
+  background-color: var(--navy-card);
+  color: #fff;
+  border-radius: 14px;
+  padding: 26px 30px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  position: relative;
+}
+
+.quote-icon {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: rgba(255,255,255,0.15);
+  font-size: 30px;
+}
+
+.testimonial-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--gold-main);
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.testimonial-text p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #CBD5E1;
+  font-style: italic;
+}
+
+.testimonial-text small {
+  display: block;
+  margin-top: 8px;
+  color: #94A3B8;
+  font-size: 13px;
+}
+
+.stars {
+  color: var(--gold-main);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+/* GALLERY PREVIEW */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  max-width: 1400px;
+  margin: 0 auto 60px;
+  padding: 0 60px;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 180px;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(15, 23, 42, 0.75);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1100px) {
+  .hero { padding: 0 40px; height: 560px; }
+  .hero h1 { font-size: 48px; }
+  .rooms-grid, .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .features-row { grid-template-columns: 1fr; }
+  .features-list { grid-template-columns: repeat(2, 1fr); }
+  .booking-bar { grid-template-columns: repeat(2, 1fr); }
+  .categories { gap: 35px; }
+}
+
+@media (max-width: 620px) {
+  .hero { padding: 0 24px; height: 520px; }
+  .hero h1 { font-size: 36px; }
+  .hero-buttons { flex-wrap: wrap; }
+  .rooms-grid, .gallery-grid { grid-template-columns: 1fr; padding: 0 24px; }
+  .rooms-wrapper, .features-section { padding: 0 24px; }
+  .booking-bar { grid-template-columns: 1fr; }
+  .section-header h2::before, .section-header h2::after { display: none; }
+}

@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="pay-section">
+    <div class="container pay-wrapper">
+
+        <!-- ================= LEFT: PAYMENT METHODS ================= -->
+        <div class="pay-card">
+
+            <div class="pay-header">
+                <h2>Complete Your Payment</h2>
+                <p>{{ reservation.room.hotel.name }} — Room {{ reservation.room.room_number }}</p>
+            </div>
+
+            <div class="pay-tabs">
+                <button type="button" class="pay-tab active" data-tab="upi">
+                    <i class="fas fa-qrcode"></i> UPI
+                </button>
+                <button type="button" class="pay-tab" data-tab="card">
+                    <i class="fas fa-credit-card"></i> Card
+                </button>
+                <button type="button" class="pay-tab" data-tab="netbanking">
+                    <i class="fas fa-university"></i> Net Banking
+                </button>
+                <button type="button" class="pay-tab" data-tab="cash">
+                    <i class="fas fa-hotel"></i> Pay at Hotel
+                </button>
+            </div>
+
+            <form method="post" id="payment-form">
+                {% csrf_token %}
+                {{ form.payment_method }}
+
+                <!-- ---------- UPI PANEL ---------- -->
+                <div class="pay-panel" data-panel="upi">
+                    <div class="scanner-frame">
+                        <div class="corner tl"></div>
+                        <div class="corner tr"></div>
+                        <div class="corner bl"></div>
+                        <div class="corner br"></div>
+                        <div class="scan-line"></div>
+
+                        <div class="qr-logo-wrap">
+                            <img
+                            src="{{ upi_qr_url }}"
+                            alt="Scan to pay for Booking #{{ reservation.id }}"
+                            class="qr-mock"
+                        >
+                            <div class="qr-logo">R</div>
+                        </div>
+                    </div>
+                    <p class="scan-hint">Scan with any UPI app to pay <strong>₹{{ reservation.room_charges }}</strong></p>
+
+                    <div class="upi-apps">
+                        <div class="upi-app"><i class="fas fa-bolt"></i><span>GPay</span></div>
+                        <div class="upi-app"><i class="fas fa-mobile-alt"></i><span>PhonePe</span></div>
+                        <div class="upi-app"><i class="fas fa-wallet"></i><span>Paytm</span></div>
+                        <div class="upi-app"><i class="fas fa-building-columns"></i><span>BHIM</span></div>
+                    </div>
+
+                    <div class="upi-divider"><span>or enter UPI ID</span></div>
+
+                    <div class="form-group full">
+                        <input type="text" placeholder="yourname@upi" class="upi-input">
+                    </div>
+                </div>
+
+                <!-- ---------- CARD PANEL ---------- -->
+               <div class="pay-panel hidden" data-panel="card">
+
+    <div class="mock-card">
+        <div class="mock-card-top">
+            <i class="fas fa-wifi"></i>
+            <span class="mock-card-brand">VISA</span>
+        </div>
+        <div class="mock-card-number">•••• •••• •••• </div>
+        <div class="mock-card-bottom">
+            <div>
+                <small>CARD HOLDER</small>
+                <div>{{ reservation.guest.first_name|default:"YOUR NAME" }} {{ reservation.guest.last_name }}</div>
+            </div>
+            <div>
+                <small>EXPIRES</small>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group full">
+        <label>Card Number <span class="required-star">*</span></label>
+        <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" class="card-field" required data-required-in-panel>
+    </div>
+
+    <div class="form-grid">
+        <div class="form-group">
+            <label>Expiry <span class="required-star">*</span></label>
+            <input type="text" placeholder="MM / YY" maxlength="7" required data-required-in-panel>
+        </div>
+        <div class="form-group">
+            <label>CVV <span class="required-star">*</span></label>
+            <input type="password" placeholder="123" maxlength="3" required data-required-in-panel>
+        </div>
+    </div>
+
+    <div class="form-group full">
+        <label>Name on Card <span class="required-star">*</span></label>
+        <input type="text" placeholder="As printed on card" required data-required-in-panel>
+    </div>
+                </div>
+
+                <!-- ---------- NET BANKING PANEL ---------- -->
+                <div class="pay-panel hidden" data-panel="netbanking">
+    <div class="bank-grid">
+        <label class="bank-option">
+            <input type="radio" name="bank">
+            <span class="bank-option-body"><i class="fas fa-university"></i> HDFC Bank</span>
+        </label>
+        <label class="bank-option">
+            <input type="radio" name="bank">
+            <span class="bank-option-body"><i class="fas fa-university"></i> ICICI Bank</span>
+        </label>
+        <label class="bank-option">
+            <input type="radio" name="bank">
+            <span class="bank-option-body"><i class="fas fa-university"></i> SBI</span>
+        </label>
+        <label class="bank-option">
+            <input type="radio" name="bank">
+            <span class="bank-option-body"><i class="fas fa-university"></i> Axis Bank</span>
+        </label>
+        <label class="bank-option">
+            <input type="radio" name="bank">
+            <span class="bank-option-body"><i class="fas fa-university"></i> Kotak Bank</span>
+        </label>
+        <label class="bank-option">
+            <input type="radio" name="bank">
+            <span class="bank-option-body"><i class="fas fa-university"></i> Other Bank</span>
+        </label>
+    </div>
+</div>
+                <!-- ---------- CASH PANEL ---------- -->
+               <div class="pay-panel hidden" data-panel="cash">
+    <div class="cash-note">
+        <i class="fas fa-circle-info"></i>
+        <p>Pay the full amount at the front desk during check-in. Your booking will be marked <strong>pending</strong> until payment is received.</p>
+    </div>
+</div>
+
+                <button type="submit" class="btn-primary pay-submit">
+                    <i class="fas fa-lock"></i> Pay ₹{{ reservation.room_charges }} Securely
+                </button>
+
+                <p class="secure-note"><i class="fas fa-shield-halved"></i> 256-bit encrypted · Payments never stored on our servers</p>
+
+            </form>
+        </div>
+
+        <!-- ================= RIGHT: ORDER SUMMARY ================= -->
+        <div class="pay-summary">
+            <h3>Booking Summary</h3>
+
+            <div class="summary-row">
+                <span>Hotel</span>
+                <strong>{{ reservation.room.hotel.name }}</strong>
+            </div>
+            <div class="summary-row">
+                <span>Room</span>
+                <strong>{{ reservation.room.room_number }} ({{ reservation.room.room_type.name }})</strong>
+            </div>
+            <div class="summary-row">
+                <span>Check-in</span>
+                <strong>{{ reservation.check_in_date }}</strong>
+            </div>
+            <div class="summary-row">
+                <span>Check-out</span>
+                <strong>{{ reservation.check_out_date }}</strong>
+            </div>
+            <div class="summary-row">
+                <span>Duration</span>
+                <strong>{{ reservation.nights }} night{{ reservation.nights|pluralize }}</strong>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total">
+                <span>Total Amount</span>
+                <strong>₹{{ reservation.room_charges }}</strong>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script src="{% static 'js/payment.js' %}"></script>
+
+{% endblock %}

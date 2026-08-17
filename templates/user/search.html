@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search Rooms{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ================= HERO ================= -->
+
+<section class="search-hero">
+    <div class="container">
+        <h1>Find Your Perfect Room</h1>
+        <p>Search luxury rooms by destination, hotel, or room type.</p>
+    </div>
+</section>
+
+<!-- ================= SEARCH FILTER ================= -->
+
+<section class="search-filter">
+    <div class="container">
+        <form method="GET">
+            <div class="filter-grid">
+                {{ form.city }}
+                {{ form.check_in }}
+                {{ form.check_out }}
+                {{ form.guests }}
+                <button type="submit" class="primary-btn">Search</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- ================= RESULTS ================= -->
+
+{% if searched %}
+<section class="room-results">
+    <div class="container">
+        <h2 class="page-title">Available Rooms ({{ rooms|length }})</h2>
+
+        <div class="room-grid">
+            {% for room in rooms %}
+            <div class="room-card">
+{% if room.room_type.name|lower == "single" %}
+    {% static "images/rooms/room1.jpg" as room_img %}
+{% elif room.room_type.name|lower == "double" %}
+    {% static "images/rooms/room4.jpg" as room_img %}
+{% elif room.room_type.name|lower == "deluxe" %}
+    {% static "images/rooms/room3.jpg" as room_img %}
+{% elif room.room_type.name|lower == "suite" %}
+    {% static "images/rooms/room2.jpg" as room_img %}
+{% else %}
+    {% static "images/rooms/room1.jpg" as room_img %}
+{% endif %}
+<img src="{{ room_img }}" alt="{{ room.room_type.name }}">
+
+                <div class="room-content">
+                    <h3>Room {{ room.room_number }}</h3>
+                    <p>Hotel : <strong>{{ room.hotel.name }}</strong></p>
+                    <p>Type : {{ room.room_type.name }}</p>
+                    <p>Capacity : {{ room.room_type.capacity }} Guests</p>
+                    <p>₹{{ room.price }} <small>/ Night</small></p>
+
+                    {% if room.status == "available" %}
+                        <span class="available">Available</span>
+                    {% else %}
+                        <span class="occupied">{{ room.get_status_display }}</span>
+                    {% endif %}
+
+                    <br><br>
+
+                    <a href="{% url 'booking_form' room.id %}?check_in={{ form.cleaned_data.check_in|date:'Y-m-d' }}&check_out={{ form.cleaned_data.check_out|date:'Y-m-d' }}&guests={{ form.cleaned_data.guests|default:1 }}"
+                       class="primary-btn">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-card">
+                <h3>No Rooms Found</h3>
+                <p>Try another city or date.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

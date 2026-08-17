@@ -1,0 +1,7 @@
+/* Staff Desk page — page-specific tweaks.
+   Shared styles (.card, .room-card, .badge) already come from base.css. */
+
+.staff-message{
+    background:#eff6ff;
+    border:1px solid var(--primary);
+}

@@ -1,0 +1,78 @@
+{% load static %}
+<header class="navbar">
+  <!-- Logo Section -->
+  <a href="{% url 'home' %}" class="brand-logo" style="text-decoration: none;">
+    <i class="fa-solid fa-crown"></i>
+    <div class="brand-text">
+      <h2>ROYAL STAY</h2>
+      <span>LUXURY HOTEL</span>
+    </div>
+  </a>
+
+  <!-- Navigation Menu based on Project Apps -->
+  <ul class="nav-menu">
+    <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+    <li><a href="{% url 'search_rooms' %}" class="{% if 'rooms' in request.path or 'search' in request.path %}active{% endif %}">Rooms</a></li>
+    <li><a href="{% url 'home' %}#amenities">Amenities</a></li>
+    <li><a href="{% url 'home' %}#gallery">Gallery</a></li>
+    <li><a href="{% url 'home' %}#about">About</a></li>
+    <li><a href="{% url 'home' %}#contact">Contact</a></li>
+  </ul>
+
+  <!-- Actions & User Profile Area -->
+  <div class="nav-right">
+
+    <a href="{% url 'search_rooms' %}" class="btn-book-nav" style="text-decoration: none;">
+      <i class="fa-regular fa-calendar-days"></i> Book Now
+    </a>
+
+    <!-- User Account / Role Menu Dropdown -->
+    <div class="user-dropdown-container">
+      <button class="user-menu-btn" onclick="toggleUserMenu()">
+        {% if user.is_authenticated %}
+          <i class="fa-solid fa-circle-user" style="color: var(--gold-main);"></i>
+        {% else %}
+          <i class="fa-regular fa-circle-user"></i>
+        {% endif %}
+      </button>
+
+      <div class="user-dropdown-menu" id="userMenu">
+        {% if user.is_authenticated %}
+          <div class="dropdown-header">
+            <strong>{{ user.get_full_name|default:user.username }}</strong>
+            <small>{{ user.email }}</small>
+          </div>
+          <hr>
+
+          {% if user.is_staff %}
+            <!-- Staff / Admin Management Features -->
+            <a href="{% url 'admin_dashboard' %}"><i class="fa-solid fa-chart-line"></i> Staff Dashboard</a>
+            <a href="{% url 'admin_reservation_list' %}"><i class="fa-solid fa-hotel"></i> Reservations</a>
+            <a href="{% url 'admin_housekeeping_list' %}"><i class="fa-solid fa-broom"></i> Housekeeping Status</a>
+          {% else %}
+            <!-- Guest / Reservations Features -->
+            <a href="{% url 'my_bookings' %}"><i class="fa-solid fa-hotel"></i> My Bookings</a>
+          {% endif %}
+
+          <hr>
+          <form method="post" action="{% url 'logout' %}" style="margin:0;">
+            {% csrf_token %}
+            <button type="submit" class="text-danger" style="background:none;border:none;width:100%;text-align:left;cursor:pointer;font:inherit;padding:8px 16px;display:flex;align-items:center;gap:10px;">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </button>
+          </form>
+
+        {% else %}
+          <div class="dropdown-header">
+            <strong>Welcome Guest</strong>
+          </div>
+          <hr>
+          <a href="{% url 'login' %}"><i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+          <a href="{% url 'register' %}"><i class="fa-solid fa-user-plus"></i> Register Account</a>
+          <hr>
+          <a href="{% url 'admin_login' %}"><i class="fa-solid fa-user-shield"></i> Staff Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</header>

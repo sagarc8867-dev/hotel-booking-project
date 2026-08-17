@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% block admin_extra_css %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+
+<section class="admin-shell">
+    <div class="container admin-grid">
+
+        <aside class="admin-sidebar">
+            <h3>Staff Panel</h3>
+            <nav>
+                <a href="{% url 'admin_dashboard' %}" class="{% if active == 'dashboard' %}active{% endif %}">
+                    <i class="fas fa-gauge-high"></i> Dashboard
+                </a>
+                <a href="{% url 'admin_hotel_list' %}" class="{% if active == 'hotels' %}active{% endif %}">
+                    <i class="fas fa-hotel"></i> Hotels
+                </a>
+                <a href="{% url 'admin_room_list' %}" class="{% if active == 'rooms' %}active{% endif %}">
+                    <i class="fas fa-bed"></i> Rooms
+                </a>
+                <a href="{% url 'admin_guest_list' %}" class="{% if active == 'guests' %}active{% endif %}">
+                    <i class="fas fa-users"></i> Guests
+                </a>
+                <a href="{% url 'admin_reservation_list' %}" class="{% if active == 'reservations' %}active{% endif %}">
+                    <i class="fas fa-calendar-check"></i> Reservations
+                </a>
+                <a href="{% url 'admin_billing_list' %}" class="{% if active == 'billing' %}active{% endif %}">
+                    <i class="fas fa-credit-card"></i> Billing
+                </a>
+                <a href="{% url 'admin_housekeeping_list' %}" class="{% if active == 'housekeeping' %}active{% endif %}">
+                    <i class="fas fa-broom"></i> Housekeeping
+                </a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-link" style="background:none;border:none;width:100%;text-align:left;cursor:pointer;font:inherit;">
+                        <i class="fas fa-right-from-bracket"></i> Logout
+                    </button>
+                </form>
+            </nav>
+        </aside>
+
+        <div class="admin-content">
+            {% block admin_content %}{% endblock %}
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Create Account{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+    <div class="container">
+        <div class="auth-card" style="max-width:520px;">
+
+            <span class="auth-badge"><i class="fas fa-user-plus"></i></span>
+
+            <h2>Create Your Account</h2>
+            <p class="auth-subtitle">Sign up to book rooms and manage your stays.</p>
+            <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:-20px;margin-bottom:20px;">
+                <span class="required-star">*</span> required
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+
+                    <div class="form-group">
+                        <label for="id_first_name">First name <span class="required-star">*</span></label>
+                        {{ form.first_name }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_last_name">Last name <span class="required-star">*</span></label>
+                        {{ form.last_name }}
+                    </div>
+
+                    <div class="form-group" style="grid-column:1 / -1;">
+                        <label for="id_username">Username <span class="required-star">*</span></label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <span style="color:#dc2626;font-size:13px;">{{ form.username.errors|striptags }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group" style="grid-column:1 / -1;">
+                        <label for="id_email">Email <span class="required-star">*</span></label>
+                        {{ form.email }}
+                    </div>
+
+                 <div class="form-group" style="grid-column:1 / -1;">
+                        <label for="id_phone">Phone <span class="required-star">*</span></label>
+                        {{ form.phone }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password1">Password <span class="required-star">*</span></label>
+                        {{ form.password1 }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password2">Confirm password <span class="required-star">*</span></label>
+                        {{ form.password2 }}
+                    </div>
+
+                </div>
+
+                {% if form.non_field_errors %}
+                    <p style="color:#dc2626;margin-top:10px;font-size:14px;">{{ form.non_field_errors|striptags }}</p>
+                {% endif %}
+                {% if form.password2.errors %}
+                    <p style="color:#dc2626;margin-top:10px;font-size:14px;">{{ form.password2.errors|striptags }}</p>
+                {% endif %}
+
+                <button type="submit" class="primary-btn" style="width:100%;margin-top:20px;">Create Account</button>
+            </form>
+
+            <p class="auth-switch">
+                Already have an account? <a href="{% url 'login' %}">Sign in</a>
+            </p>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

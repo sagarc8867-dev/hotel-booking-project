@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Confirmed{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/confirmation.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="form-section">
+    <div class="container">
+
+        <div class="form-container" style="max-width:650px;text-align:center;">
+
+            <h1 style="margin-bottom:20px;">Booking confirmed 🎉</h1>
+
+            <div class="card" style="padding:25px;text-align:left;">
+                <p><span class="badge badge-{{ reservation.status }}">{{ reservation.get_status_display }}</span></p>
+                <p><strong>Confirmation #</strong> {{ reservation.id }}</p>
+                <p><strong>Guest</strong> {{ reservation.guest.first_name }} {{ reservation.guest.last_name }}</p>
+                <p><strong>Hotel</strong> {{ reservation.room.hotel.name }} — Room {{ reservation.room.room_number }}</p>
+                <p><strong>Stay</strong> {{ reservation.check_in_date }} → {{ reservation.check_out_date }}</p>
+                <p><strong>Total Paid</strong> ₹{{ reservation.room_charges }}</p>
+            </div>
+
+            <div class="confirmation-actions form-actions" style="justify-content:center;">
+                <a href="{% url 'home' %}" class="btn-secondary">Back to Home</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'my_bookings' %}" class="btn-primary">Go to My Bookings</a>
+                {% else %}
+                <a href="{% url 'login' %}" class="btn-primary">Sign In to Track Bookings</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

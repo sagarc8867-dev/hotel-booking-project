@@ -1,0 +1,59 @@
+{% extends 'admin/_shell.html' %}
+{% block title %}Manage Guests{% endblock %}
+
+{% block admin_content %}
+
+<section class="page-header" style="padding:0 0 30px;">
+    <div class="header-flex">
+        <div>
+            <h1>Guest Management</h1>
+            <p>View, add, edit and remove guest profiles.</p>
+        </div>
+        <a href="{% url 'admin_guest_add' %}" class="btn-primary">
+            <i class="fas fa-plus"></i> Add Guest
+        </a>
+    </div>
+</section>
+
+<div class="table-card">
+
+    <div class="table-top">
+        <form method="GET">
+            <input type="text" name="search" placeholder="Search name, email, phone..." value="{{ search }}">
+            <button class="btn-primary">Search</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>ID Proof</th>
+                <th>Bookings</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for guest in guests %}
+            <tr>
+                <td>{{ guest.first_name }} {{ guest.last_name }}</td>
+                <td>{{ guest.email }}</td>
+                <td>{{ guest.phone }}</td>
+                <td>{{ guest.id_proof_type|default:"—" }}</td>
+                <td>{{ guest.reservations.count }}</td>
+                <td>
+                    <a href="{% url 'admin_guest_edit' guest.id %}" class="edit-btn">Edit</a>
+                    <a href="{% url 'admin_guest_delete' guest.id %}" class="delete-btn">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No guests found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

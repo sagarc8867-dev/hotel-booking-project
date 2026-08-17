@@ -1,0 +1,105 @@
+/* Search Rooms page — page-specific tweaks.
+   Shared styles (.card, .grid-2, .room-card) already come from base.css. */
+.search-hero{
+    background:var(--navy-dark);
+    color:#fff;
+    padding:60px 0 40px;
+    text-align:center;
+}
+.search-hero h1{ color:#fff; font-size:32px; margin-bottom:8px; }
+.search-hero p{ color:#CBD5E1; font-size:15px; }
+
+.search-filter{
+    margin:-30px 0 20px;
+    padding:0;
+    position:relative;
+    z-index:5;
+}
+.filter-grid{
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    padding:18px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr) auto;
+    gap:12px;
+    align-items:center;
+}
+.filter-grid input, .filter-grid select{
+    border:1px solid var(--border-light);
+    border-radius:8px;
+    padding:10px 12px;
+    font-size:14px;
+}
+
+.room-results{
+    padding:20px 0 80px;
+}
+
+.page-title{ margin-bottom:24px; font-size:24px; }
+
+.room-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+    gap:24px;
+}
+
+.room-card{
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--border-light);
+    box-shadow:0 6px 18px rgba(0,0,0,0.06);
+}
+
+.room-card img{
+    width:100%;
+    height:210px;
+    object-fit:cover;
+    display:block;
+}
+
+.room-content{ padding:18px; }
+.room-content h3{ font-size:18px; margin-bottom:8px; }
+.room-content p{ font-size:14px; color:var(--text-muted); margin-bottom:4px; }
+
+.available{
+    display:inline-block;
+    background:#DCFCE7;
+    color:#166534;
+    font-size:12px;
+    font-weight:600;
+    padding:4px 10px;
+    border-radius:999px;
+    margin-top:8px;
+}
+.occupied{
+    display:inline-block;
+    background:#FEE2E2;
+    color:#991B1B;
+    font-size:12px;
+    font-weight:600;
+    padding:4px 10px;
+    border-radius:999px;
+    margin-top:8px;
+}
+
+.room-content .primary-btn{
+    display:inline-block;
+    margin-top:12px;
+    text-align:center;
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+}
+
+.empty-card{
+    grid-column:1 / -1;
+    text-align:center;
+    padding:60px 20px;
+    color:var(--text-muted);
+}
+
+@media(max-width:700px){
+    .filter-grid{ grid-template-columns:1fr; }
+}

@@ -1,0 +1,335 @@
+/* =====================================================
+   COMMON / SHARED ADDITIONS
+   (grid helpers, status badges, alerts, auth pages,
+   admin shell + dashboard cards)
+====================================================== */
+
+/* ---------- Small helpers used on booking/payment/confirmation ---------- */
+
+.muted{
+    color:var(--muted);
+}
+
+.grid-2{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+}
+
+@media(max-width:768px){
+    .grid-2{ grid-template-columns:1fr; }
+}
+
+/* ---------- Reservation status badges ---------- */
+
+.badge-pending{ background:#fef3c7; color:#92400e; }
+.badge-confirmed{ background:#dbeafe; color:#1d4ed8; }
+.badge-checked_in{ background:#dcfce7; color:#166534; }
+.badge-checked_out{ background:#e2e8f0; color:#334155; }
+.badge-cancelled{ background:#fee2e2; color:#991b1b; }
+.badge-success{ background:#dcfce7; color:#166534; }
+.badge-failed{ background:#fee2e2; color:#991b1b; }
+
+/* ---------- Django messages ---------- */
+
+.messages{
+    list-style:none;
+    max-width:1280px;
+    width:92%;
+    margin:18px auto 0;
+}
+
+.messages li{
+    padding:14px 20px;
+    border-radius:12px;
+    margin-bottom:10px;
+    font-weight:500;
+    border:1px solid transparent;
+}
+
+.messages .success{ background:#dcfce7; color:#166534; border-color:#bbf7d0; }
+.messages .error{ background:#fee2e2; color:#991b1b; border-color:#fecaca; }
+.messages .warning{ background:#fef3c7; color:#92400e; border-color:#fde68a; }
+.messages .info{ background:#dbeafe; color:#1d4ed8; border-color:#bfdbfe; }
+
+/* ---------- Auth pages (login / register) ---------- */
+.auth-section{
+    padding:70px 0;
+    min-height:calc(100vh - 100px);
+    display:flex;
+    align-items:center;
+    background-color:#080E1E;
+    background-image:linear-gradient(rgba(8,14,30,0.72), rgba(8,14,30,0.72)), url('/static/images/hero/hero3.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+}
+
+.auth-card{
+    max-width:460px;
+    width:100%;
+    margin:auto;
+    background:#fff;
+    border-radius:20px;
+    padding:45px;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+}
+
+.auth-card h2{
+    text-align:center;
+    font-size:30px;
+    color:var(--dark);
+    margin-bottom:6px;
+}
+
+.auth-card .auth-subtitle{
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:30px;
+    font-size:14px;
+}
+
+.auth-card form label{
+    font-weight:600;
+    color:#334155;
+    margin-bottom:6px;
+    display:block;
+}
+
+.auth-card .form-group{
+    margin-bottom:20px;
+}
+
+.auth-card button[type="submit"]{
+    width:100%;
+    margin-top:5px;
+}
+
+.auth-switch{
+    text-align:center;
+    margin-top:22px;
+    font-size:14px;
+    color:var(--muted);
+}
+
+.auth-switch a{
+    color:var(--primary);
+    font-weight:600;
+}
+
+.auth-badge{
+    display:block;
+    width:64px;
+    height:64px;
+    line-height:64px;
+    text-align:center;
+    border-radius:50%;
+    background:var(--primary-light);
+    color:var(--primary);
+    font-size:26px;
+    margin:0 auto 18px;
+}
+
+/* ---------- Admin shell (sidebar layout) ---------- */
+
+.admin-shell{
+    padding:40px 0 80px;
+    min-height:75vh;
+}
+
+.admin-grid{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    gap:30px;
+    align-items:start;
+}
+
+.admin-sidebar{
+    background:#fff;
+    border-radius:18px;
+    padding:25px 0;
+    box-shadow:var(--shadow);
+    position:sticky;
+    top:100px;
+}
+
+.admin-sidebar h3{
+    padding:0 25px 18px;
+    font-size:13px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--muted);
+    border-bottom:1px solid var(--border);
+    margin-bottom:10px;
+}
+
+.admin-sidebar nav{
+    display:flex;
+    flex-direction:column;
+}
+
+.admin-sidebar nav a{
+    padding:13px 25px;
+    color:var(--text);
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border-left:3px solid transparent;
+    transition:.25s;
+}
+
+.admin-sidebar nav a i{
+    width:18px;
+    text-align:center;
+    color:var(--muted);
+}
+
+.admin-sidebar nav a:hover{
+    background:#f1f5f9;
+}
+
+.admin-sidebar nav a.active{
+    background:var(--primary-light);
+    color:var(--primary);
+    border-left-color:var(--primary);
+}
+
+.admin-sidebar nav a.active i{
+    color:var(--primary);
+}
+
+.admin-sidebar nav a.logout-link{
+    margin-top:10px;
+    border-top:1px solid var(--border);
+    padding-top:16px;
+    color:#dc2626;
+}
+
+.admin-content{
+    min-width:0;
+}
+
+@media(max-width:900px){
+    .admin-grid{ grid-template-columns:1fr; }
+    .admin-sidebar{ position:static; }
+    .admin-sidebar nav{ flex-direction:row; flex-wrap:wrap; }
+    .admin-sidebar nav a{ border-left:none; border-bottom:3px solid transparent; }
+    .admin-sidebar nav a.active{ border-bottom-color:var(--primary); }
+}
+
+/* ---------- Dashboard stat cards ---------- */
+
+.stat-cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+    margin-bottom:40px;
+}
+
+@media(max-width:1000px){
+    .stat-cards{ grid-template-columns:repeat(2,1fr); }
+}
+
+@media(max-width:560px){
+    .stat-cards{ grid-template-columns:1fr; }
+}
+
+.stat-card-mini{
+    background:#fff;
+    border-radius:18px;
+    padding:26px;
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.stat-card-mini .icon{
+    width:54px;
+    height:54px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    background:var(--primary-light);
+    color:var(--primary);
+    flex-shrink:0;
+}
+
+.stat-card-mini h2{
+    font-size:28px;
+    color:var(--dark);
+}
+
+.stat-card-mini p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.dashboard-section-title{
+    font-size:20px;
+    color:var(--dark);
+    margin:10px 0 18px;
+}
+
+.quick-links{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-top:10px;
+}
+
+@media(max-width:700px){
+    .quick-links{ grid-template-columns:1fr; }
+}
+
+.quick-link-card{
+    background:#fff;
+    border-radius:16px;
+    padding:22px;
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    gap:14px;
+    transition:var(--transition);
+}
+
+.quick-link-card:hover{
+    transform:translateY(-4px);
+    box-shadow:var(--shadow-hover);
+}
+
+.quick-link-card i{
+    font-size:20px;
+    color:var(--primary);
+}
+
+/* ---------- Small action-link buttons reused on my_bookings ---------- */
+
+.status-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.status-actions form{
+    display:inline;
+}
+
+.mini-btn{
+    display:inline-block;
+    padding:7px 12px;
+    border-radius:8px;
+    color:#fff;
+    font-size:13px;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+}
+
+.mini-btn.confirm{ background:var(--primary); }
+.mini-btn.checkin{ background:#10b981; }
+.mini-btn.checkout{ background:#0f172a; }
+.mini-btn.cancel{ background:#ef4444; }

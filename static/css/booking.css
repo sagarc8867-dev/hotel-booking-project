@@ -1,0 +1,6 @@
+/* Booking page — page-specific tweaks.
+   Shared styles (.card, .grid-2, form fields) already come from base.css. */
+
+.stay-summary{
+    margin-bottom:1.2rem;
+}

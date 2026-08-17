@@ -1,0 +1,57 @@
+<footer id="contact">
+
+    <div class="footer-container">
+
+        <div>
+
+            <div class="footer-brand">
+                <i class="fa-solid fa-crown"></i>
+                <span>ROYAL STAY</span>
+            </div>
+
+            <p>
+                Where royal comfort meets modern luxury. Premium
+                stays, world-class hospitality.
+            </p>
+
+        </div>
+
+        <div>
+
+            <h4>Quick Links</h4>
+
+            <a href="{% url 'home' %}">Home</a>
+
+            <a href="{% url 'search_rooms' %}">Rooms</a>
+
+            {% if user.is_authenticated and user.is_staff %}
+                <a href="{% url 'admin_dashboard' %}">Admin Panel</a>
+            {% elif user.is_authenticated %}
+                <a href="{% url 'my_bookings' %}">My Bookings</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'admin_login' %}">Staff Login</a>
+            {% endif %}
+
+        </div>
+
+        <div>
+
+            <h4>Contact</h4>
+
+            <p>Email : info@royalstay.com</p>
+
+            <p>Phone : +91 9876543210</p>
+
+        </div>
+
+    </div>
+
+    <div class="copyright">
+
+        © {% now "Y" %} Royal Stay Luxury Hotel.
+        All Rights Reserved.
+
+    </div>
+
+</footer>

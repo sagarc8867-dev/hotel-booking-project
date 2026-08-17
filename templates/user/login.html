@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-section">
+    <div class="container">
+        <div class="auth-card">
+
+            <span class="auth-badge"><i class="fas fa-user"></i></span>
+
+            <h2>Welcome To Royal Stay</h2>
+            <p class="auth-subtitle">Sign in to book rooms and track your stays.</p>
+            <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:-20px;margin-bottom:20px;">
+                <span class="required-star">*</span> required
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="id_username">Username <span class="required-star">*</span></label>
+                    {{ form.username }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password">Password <span class="required-star">*</span></label>
+                    {{ form.password }}
+                </div>
+
+                {% if form.errors %}
+                    <p style="color:#dc2626;margin-bottom:15px;font-size:14px;">
+                        Incorrect username or password. Please try again.
+                    </p>
+                {% endif %}
+
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <button type="submit" class="primary-btn">Login</button>
+            </form>
+
+            <p class="auth-switch">
+                New here? <a href="{% url 'register' %}">Create an account</a>
+            </p>
+
+            <p class="auth-switch">
+                Hotel staff? <a href="{% url 'admin_login' %}">Staff login</a>
+            </p>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

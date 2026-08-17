@@ -1,0 +1,60 @@
+{% extends 'admin/_shell.html' %}
+{% block title %}Manage Hotels{% endblock %}
+
+{% block admin_content %}
+
+<section class="page-header" style="padding:0 0 30px;">
+    <div class="header-flex">
+        <div>
+            <h1>Hotel Management</h1>
+            <p>View, add, edit and remove properties.</p>
+        </div>
+        <a href="{% url 'admin_hotel_add' %}" class="btn-primary">
+            <i class="fas fa-plus"></i> Add Hotel
+        </a>
+    </div>
+</section>
+
+<div class="table-card">
+
+    <div class="table-top">
+        <form method="GET">
+            <input type="text" name="search" placeholder="Search hotel, city..." value="{{ search }}">
+            <button class="btn-primary">Search</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Rating</th>
+                <th>Rooms</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hotel in hotels %}
+            <tr>
+                <td>{{ hotel.name }}</td>
+                <td>{{ hotel.city }}</td>
+                <td>{{ hotel.state }}</td>
+                <td>{{ hotel.star_rating }} ★</td>
+                <td>{{ hotel.rooms.count }}</td>
+                <td>
+                    <a href="{% url 'hotel_detail' hotel.id %}" class="view-btn">View</a>
+                    <a href="{% url 'admin_hotel_edit' hotel.id %}" class="edit-btn">Edit</a>
+                    <a href="{% url 'admin_hotel_delete' hotel.id %}" class="delete-btn">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No hotels found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

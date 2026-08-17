@@ -1,0 +1,473 @@
+/* ================================
+   PAYMENT PAGE
+================================ */
+
+.pay-section {
+    min-height: calc(100vh - 70px);
+    padding: 40px 0 70px;
+    background: #f7f0e2;
+}
+
+.pay-wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 25px;
+    align-items: start;
+}
+
+/* ================================
+   PAYMENT CARD
+================================ */
+
+.pay-card {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.pay-header h2 {
+    font-family: Georgia, serif;
+    font-size: 24px;
+    color: #172033;
+    margin-bottom: 4px;
+}
+
+.pay-header p {
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+/* ================================
+   PAYMENT METHOD TABS
+================================ */
+
+.pay-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    background: #f1f4f8;
+    padding: 4px;
+    border-radius: 8px;
+    margin-bottom: 22px;
+}
+
+.pay-tab {
+    border: none;
+    background: transparent;
+    padding: 10px 5px;
+    font-size: 11px;
+    color: #555;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.pay-tab i { font-size: 14px; }
+
+.pay-tab.active {
+    background: #ffffff;
+    color: #b47a18;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ================================
+   PANELS (one shown at a time)
+================================ */
+
+.pay-panel.hidden {
+    display: none;
+}
+
+/* ================================
+   UPI / QR SCANNER
+================================ */
+
+.scanner-frame {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 14px;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.qr-logo-wrap {
+    position: relative;
+    width: 220px;
+    height: 220px;
+}
+
+.qr-logo-wrap .qr-mock {
+    width: 220px !important;
+    height: 220px !important;
+    display: block;
+    border-radius: 8px;
+}
+
+.qr-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 34px;
+    height: 34px;
+    background: #c9922c;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    border: 3px solid #fff;
+}
+
+.corner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 3px solid #c9922c;
+    z-index: 2;
+}
+.corner.tl { top: -6px; left: -6px; border-right: none; border-bottom: none; }
+.corner.tr { top: -6px; right: -6px; border-left: none; border-bottom: none; }
+.corner.bl { bottom: -6px; left: -6px; border-right: none; border-top: none; }
+.corner.br { bottom: -6px; right: -6px; border-left: none; border-top: none; }
+
+.scan-line {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #c9922c, transparent);
+    animation: scan 2.2s linear infinite;
+}
+
+@keyframes scan {
+    0%   { top: 0%; }
+    50%  { top: 96%; }
+    100% { top: 0%; }
+}
+
+.scan-hint {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 16px;
+}
+
+/* ================================
+   UPI APPS
+================================ */
+
+.upi-apps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.upi-app {
+    background: #f7f8fa;
+    border-radius: 7px;
+    padding: 10px 5px;
+    text-align: center;
+    font-size: 10px;
+    color: #555;
+}
+
+.upi-app i {
+    display: block;
+    color: #b47a18;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.upi-divider {
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+    margin: 10px 0;
+    position: relative;
+}
+
+.upi-input {
+    width: 100%;
+    height: 38px;
+    border: 1px solid #d8dce3;
+    border-radius: 6px;
+    padding: 0 12px;
+    font-size: 12px;
+    outline: none;
+}
+
+.upi-input:focus {
+    border-color: #c9922c;
+    box-shadow: 0 0 0 2px rgba(201, 146, 44, 0.12);
+}
+
+/* ================================
+   CARD PANEL
+================================ */
+
+.mock-card {
+    background: linear-gradient(135deg, #172033, #0b1427);
+    color: #fff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 18px;
+}
+
+.mock-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    font-size: 16px;
+}
+
+.mock-card-brand {
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 1px;
+}
+
+.mock-card-number {
+    font-size: 17px;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+}
+
+.mock-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.mock-card-bottom small {
+    display: block;
+    color: rgba(255,255,255,0.5);
+    font-size: 9px;
+    margin-bottom: 3px;
+    letter-spacing: 0.5px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+/* ================================
+   NET BANKING PANEL
+================================ */
+.bank-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.bank-option {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center;
+    gap: 10px;
+    border: 1.5px solid #e2e6ec;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #172033;
+    cursor: pointer;
+    background: #fff;
+    transition: 0.2s ease;
+}
+
+.bank-option:hover {
+    border-color: #c9922c;
+    background: #fbf6ea;
+}
+
+.bank-option input[type="radio"] {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    accent-color: #c9922c;
+    margin: 0;
+}
+
+.bank-option-body {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.bank-option-body i {
+    color: #b47a18;
+    font-size: 15px;
+    flex: 0 0 auto;
+}
+/* ================================
+   CASH PANEL
+================================ */
+
+.cash-note {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #fbf1df;
+    border: 1px solid #f0dcb0;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.cash-note i {
+    color: #b47a18;
+    font-size: 16px;
+    margin-top: 2px;
+}
+
+.cash-note p {
+    font-size: 12.5px;
+    color: #5a4a2a;
+    line-height: 1.6;
+}
+
+/* ================================
+   PAY BUTTON
+================================ */
+
+.pay-submit {
+    width: 100%;
+    height: 46px;
+    border: none;
+    border-radius: 7px;
+    background: #c9922c;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+    transition: 0.25s ease;
+}
+
+.pay-submit:hover {
+    background: #a97619;
+    transform: translateY(-1px);
+}
+
+.secure-note {
+    text-align: center;
+    color: #777;
+    font-size: 10px;
+    margin-top: 12px;
+}
+
+/* ================================
+   BOOKING SUMMARY (right column)
+================================ */
+
+.pay-summary {
+    width: 100%;
+    background: #101a30;
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 34px 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 100px;
+}
+
+.pay-summary h3 {
+    font-size: 20px;
+    margin-bottom: 24px;
+    color: #ffffff;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+}
+
+.summary-row span { color: #bfc6d4; }
+.summary-row strong { color: #ffffff; font-weight: 600; text-align: right; font-size: 15px; }
+
+.summary-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 20px 0;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summary-total span {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.summary-total strong {
+    color: #e4a82d;
+    font-size: 30px;
+    font-weight: 700;
+}
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+    .pay-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .pay-summary {
+        position: static;
+    }
+}
+
+@media (max-width: 600px) {
+    .pay-section {
+        padding: 20px 0;
+    }
+    .pay-card {
+        padding: 18px;
+    }
+    .pay-tabs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .upi-apps, .bank-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .scanner-frame, .qr-logo-wrap {
+        width: 180px;
+        height: 180px;
+    }
+    .qr-logo-wrap .qr-mock {
+        width: 180px !important;
+        height: 180px !important;
+    }
+}
+#id_payment_method {
+    display: none;
+}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Bookings{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div class="container">
+        <div class="header-flex">
+            <div>
+                <h1>My Bookings</h1>
+                <p>All the reservations linked to your account.</p>
+            </div>
+            <a href="{% url 'search_rooms' %}" class="btn-primary">
+                <i class="fas fa-plus"></i> Book Another Stay
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="table-section">
+    <div class="container">
+        <div class="table-card">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Hotel / Room</th>
+                        <th>Check-In</th>
+                        <th>Check-Out</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Booked On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reservations %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.room.hotel.name }} — Room {{ r.room.room_number }}</td>
+                        <td>{{ r.check_in_date }}</td>
+                        <td>{{ r.check_out_date }}</td>
+                        <td>₹{{ r.room_charges }}</td>
+                        <td><span class="badge badge-{{ r.status }}">{{ r.get_status_display }}</span></td>
+                        <td>{{ r.booking_date|date:"d M Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7">You haven't made any bookings yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

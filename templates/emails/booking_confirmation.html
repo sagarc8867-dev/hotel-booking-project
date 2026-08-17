@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:0;background:#EEECE6;font-family:Georgia,'Times New Roman',serif;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#EEECE6;padding:40px 0;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border:1px solid #E2E8F0;">
+
+                    <!-- HEADER -->
+                    <tr>
+                        <td style="background:#0A1224;padding:36px 40px;text-align:center;">
+                            <span style="color:#E5A83B;font-size:13px;letter-spacing:4px;font-family:Arial,sans-serif;">ROYAL STAY</span>
+                            <div style="color:#ffffff;font-size:11px;letter-spacing:2px;font-family:Arial,sans-serif;margin-top:4px;">LUXURY HOTEL</div>
+                        </td>
+                    </tr>
+
+                    <!-- TITLE -->
+                    <tr>
+                        <td style="padding:36px 40px 20px;border-bottom:1px solid #E2E8F0;">
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td>
+                                        <h1 style="margin:0;color:#0A1224;font-size:24px;font-weight:normal;">Booking Confirmation</h1>
+                                        <p style="margin:6px 0 0;color:#64748B;font-size:13px;font-family:Arial,sans-serif;">
+                                            {% if payment.paid_at %}Issued {{ payment.paid_at|date:"F j, Y — g:i A" }}{% else %}Issued {% now "F j, Y — g:i A" %}{% endif %}
+                                        </p>
+                                    </td>
+                                    <td align="right" valign="top">
+                                        <p style="margin:0;color:#64748B;font-size:11px;font-family:Arial,sans-serif;letter-spacing:1px;">CONFIRMATION NO.</p>
+                                        <p style="margin:4px 0 0;color:#C9922E;font-size:20px;font-weight:bold;font-family:Arial,sans-serif;">#{{ reservation.id }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- GREETING -->
+                    <tr>
+                        <td style="padding:28px 40px 8px;">
+                            <p style="margin:0;color:#1E293B;font-size:14px;line-height:1.7;">
+                                Dear {{ reservation.guest.first_name }} {{ reservation.guest.last_name }},
+                            </p>
+                            <p style="margin:12px 0 0;color:#1E293B;font-size:14px;line-height:1.7;">
+                                Thank you for choosing Royal Stay. We are pleased to confirm your reservation.
+                                Full details of your stay and payment are set out below for your records.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- GUEST & STAY DETAILS -->
+                    <tr>
+                        <td style="padding:24px 40px 0;">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial,sans-serif;">
+                                <tr>
+                                    <td width="50%" valign="top" style="padding-right:16px;">
+                                        <p style="margin:0 0 8px;color:#94A3B8;font-size:10px;letter-spacing:1px;">GUEST</p>
+                                        <p style="margin:0;color:#0A1224;font-size:13px;font-weight:bold;">{{ reservation.guest.first_name }} {{ reservation.guest.last_name }}</p>
+                                        <p style="margin:4px 0 0;color:#64748B;font-size:12px;">{{ reservation.guest.email }}</p>
+                                        <p style="margin:2px 0 0;color:#64748B;font-size:12px;">{{ reservation.guest.phone }}</p>
+                                    </td>
+                                    <td width="50%" valign="top" style="padding-left:16px;border-left:1px solid #E2E8F0;">
+                                        <p style="margin:0 0 8px;color:#94A3B8;font-size:10px;letter-spacing:1px;">PROPERTY</p>
+                                        <p style="margin:0;color:#0A1224;font-size:13px;font-weight:bold;">{{ reservation.room.hotel.name }}</p>
+                                        <p style="margin:4px 0 0;color:#64748B;font-size:12px;">{{ reservation.room.hotel.city }}{% if reservation.room.hotel.state %}, {{ reservation.room.hotel.state }}{% endif %}</p>
+                                        <p style="margin:2px 0 0;color:#64748B;font-size:12px;">{{ reservation.room.hotel.contact_phone }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- STAY SUMMARY -->
+                    <tr>
+                        <td style="padding:28px 40px 0;">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background:#F8F5EF;border-radius:4px;font-family:Arial,sans-serif;">
+                                <tr>
+                                    <td style="padding:18px 22px;" width="25%">
+                                        <p style="margin:0 0 4px;color:#94A3B8;font-size:10px;letter-spacing:1px;">CHECK-IN</p>
+                                        <p style="margin:0;color:#0A1224;font-size:13px;font-weight:bold;">{{ reservation.check_in_date|date:"D, M j, Y" }}</p>
+                                        <p style="margin:2px 0 0;color:#64748B;font-size:11px;">From 2:00 PM</p>
+                                    </td>
+                                    <td style="padding:18px 22px;" width="25%">
+                                        <p style="margin:0 0 4px;color:#94A3B8;font-size:10px;letter-spacing:1px;">CHECK-OUT</p>
+                                        <p style="margin:0;color:#0A1224;font-size:13px;font-weight:bold;">{{ reservation.check_out_date|date:"D, M j, Y" }}</p>
+                                        <p style="margin:2px 0 0;color:#64748B;font-size:11px;">By 11:00 AM</p>
+                                    </td>
+                                    <td style="padding:18px 22px;" width="25%">
+                                        <p style="margin:0 0 4px;color:#94A3B8;font-size:10px;letter-spacing:1px;">DURATION</p>
+                                        <p style="margin:0;color:#0A1224;font-size:13px;font-weight:bold;">{{ reservation.nights }} night{{ reservation.nights|pluralize }}</p>
+                                    </td>
+                                    <td style="padding:18px 22px;" width="25%">
+                                        <p style="margin:0 0 4px;color:#94A3B8;font-size:10px;letter-spacing:1px;">ROOM</p>
+                                        <p style="margin:0;color:#0A1224;font-size:13px;font-weight:bold;">{{ reservation.room.room_number }}</p>
+                                        <p style="margin:2px 0 0;color:#64748B;font-size:11px;">{{ reservation.room.room_type.name }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- INVOICE / BILLING -->
+                    <tr>
+                        <td style="padding:32px 40px 0;">
+                            <p style="margin:0 0 12px;color:#94A3B8;font-size:10px;letter-spacing:1px;font-family:Arial,sans-serif;">PAYMENT SUMMARY</p>
+                            <table width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial,sans-serif;border-collapse:collapse;">
+                                <tr>
+                                    <td style="padding:10px 0;border-bottom:1px solid #E2E8F0;color:#1E293B;font-size:13px;">
+                                        Room Rate — ₹{{ reservation.room.price }} × {{ reservation.nights }} night{{ reservation.nights|pluralize }}
+                                    </td>
+                                    <td style="padding:10px 0;border-bottom:1px solid #E2E8F0;color:#1E293B;font-size:13px;text-align:right;">
+                                        ₹{{ reservation.room_charges }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:10px 0;border-bottom:{% if payment.transaction_id %}1px solid #E2E8F0{% else %}2px solid #0A1224{% endif %};color:#1E293B;font-size:13px;">
+                                        Payment Method
+                                    </td>
+                                    <td style="padding:10px 0;border-bottom:{% if payment.transaction_id %}1px solid #E2E8F0{% else %}2px solid #0A1224{% endif %};color:#1E293B;font-size:13px;text-align:right;">
+                                        {{ payment.get_payment_method_display }}
+                                    </td>
+                                </tr>
+                                {% if payment.transaction_id %}
+                                <tr>
+                                    <td style="padding:10px 0;border-bottom:2px solid #0A1224;color:#1E293B;font-size:13px;">
+                                        Transaction ID
+                                    </td>
+                                    <td style="padding:10px 0;border-bottom:2px solid #0A1224;color:#1E293B;font-size:13px;text-align:right;">
+                                        {{ payment.transaction_id }}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <td style="padding:16px 0 0;color:#0A1224;font-size:15px;font-weight:bold;">
+                                        {% if payment.transaction_id %}Total Paid{% else %}Amount Due at Check-In{% endif %}
+                                    </td>
+                                    <td style="padding:16px 0 0;color:#C9922E;font-size:26px;font-weight:bold;text-align:right;">
+                                        ₹{{ reservation.room_charges }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- STATUS BADGE -->
+                    <tr>
+                        <td style="padding:28px 40px 0;">
+                            <table cellpadding="0" cellspacing="0">
+                                <tr>
+                                    {% if payment.payment_status == 'success' %}
+                                    <td style="background:#DCFCE7;padding:8px 16px;border-radius:20px;font-family:Arial,sans-serif;">
+                                        <span style="color:#166534;font-size:12px;font-weight:bold;">✓ PAYMENT RECEIVED &nbsp;·&nbsp; BOOKING CONFIRMED</span>
+                                    </td>
+                                    {% else %}
+                                    <td style="background:#FEF3C7;padding:8px 16px;border-radius:20px;font-family:Arial,sans-serif;">
+                                        <span style="color:#92400E;font-size:12px;font-weight:bold;">⏳ PAYMENT DUE AT CHECK-IN &nbsp;·&nbsp; BOOKING PENDING</span>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- NOTES -->
+                    <tr>
+                        <td style="padding:28px 40px 0;">
+                            <p style="margin:0 0 8px;color:#94A3B8;font-size:10px;letter-spacing:1px;font-family:Arial,sans-serif;">IMPORTANT INFORMATION</p>
+                            <p style="margin:0;color:#64748B;font-size:12px;line-height:1.8;font-family:Arial,sans-serif;">
+                                {% if payment.transaction_id %}
+                                Please carry a valid government-issued photo ID matching the guest name at check-in.
+                                This confirmation email should be presented at the reception desk on arrival.
+                                For any changes to your reservation, please contact the hotel directly using the details below.
+                                {% else %}
+                                Please bring the full amount of ₹{{ reservation.room_charges }} in cash to settle at the
+                                reception desk during check-in. Please also carry a valid government-issued photo ID
+                                matching the guest name. For any changes to your reservation, please contact the hotel
+                                directly using the details below.
+                                {% endif %}
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- FOOTER -->
+                    <tr>
+                        <td style="padding:36px 40px 32px;">
+                            <p style="margin:0;color:#1E293B;font-size:13px;">We look forward to welcoming you.</p>
+                            <p style="margin:4px 0 0;color:#1E293B;font-size:13px;">Warm regards,<br><strong>Royal Stay Guest Relations</strong></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="background:#0A1224;padding:24px 40px;text-align:center;font-family:Arial,sans-serif;">
+                            <p style="margin:0;color:#94A3B8;font-size:11px;">Royal Stay Luxury Hotel</p>
+                            <p style="margin:4px 0 0;color:#94A3B8;font-size:11px;">info@royalstay.com &nbsp;·&nbsp; +91 9876543210</p>
+                            <p style="margin:12px 0 0;color:#475569;font-size:10px;">This is an automated confirmation. Please do not reply directly to this email.</p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

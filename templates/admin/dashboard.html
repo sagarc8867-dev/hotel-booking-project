@@ -1,0 +1,142 @@
+{% extends 'admin/_shell.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block admin_content %}
+
+<div class="header-flex" style="margin-bottom:30px;">
+    <div>
+        <h1 style="font-size:32px;color:#0f172a;">Welcome , {{ request.user.first_name|default:request.user.username }}</h1>
+        <p style="color:#64748b;margin-top:6px;">Here's what's happening across Royal Stay Hotels.</p>
+    </div>
+</div>
+
+<div class="stat-cards">
+
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-hotel"></i></div>
+        <div>
+            <h2>{{ hotel_count }}</h2>
+            <p>Hotels</p>
+        </div>
+    </div>
+
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-bed"></i></div>
+        <div>
+            <h2>{{ room_count }}</h2>
+            <p>Rooms ({{ available_room_count }} available)</p>
+        </div>
+    </div>
+
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-users"></i></div>
+        <div>
+            <h2>{{ guest_count }}</h2>
+            <p>Registered Guests</p>
+        </div>
+    </div>
+
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-calendar-check"></i></div>
+        <div>
+            <h2>{{ reservation_count }}</h2>
+            <p>Total Reservations</p>
+        </div>
+    </div>
+
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-clock"></i></div>
+        <div>
+            <h2>{{ pending_count }}</h2>
+            <p>Pending Reservations</p>
+        </div>
+    </div>
+
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-door-open"></i></div>
+        <div>
+            <h2>{{ checked_in_count }}</h2>
+            <p>Currently Checked-In</p>
+        </div>
+    </div>
+
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-broom"></i></div>
+        <div>
+            <h2>{{ housekeeping_pending_count }}</h2>
+            <p>Pending Housekeeping</p>
+        </div>
+    </div>
+
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-indian-rupee-sign"></i></div>
+        <div>
+            <h2>₹{{ total_revenue }}</h2>
+            <p>Revenue Collected</p>
+        </div>
+    </div>
+
+</div>
+
+<h3 class="dashboard-section-title">Quick Actions</h3>
+
+<div class="quick-links">
+
+    <a href="{% url 'admin_hotel_add' %}" class="quick-link-card">
+        <i class="fas fa-plus"></i> Add Hotel
+    </a>
+
+    <a href="{% url 'admin_room_add' %}" class="quick-link-card">
+        <i class="fas fa-plus"></i> Add Room
+    </a>
+
+    <a href="{% url 'admin_guest_add' %}" class="quick-link-card">
+        <i class="fas fa-plus"></i> Add Guest
+    </a>
+
+    <a href="{% url 'admin_reservation_list' %}" class="quick-link-card">
+        <i class="fas fa-calendar-check"></i> Manage Reservations
+    </a>
+
+    <a href="{% url 'admin_housekeeping_add' %}" class="quick-link-card">
+        <i class="fas fa-broom"></i> Assign Housekeeping
+    </a>
+
+    <a href="{% url 'admin_billing_list' %}" class="quick-link-card">
+        <i class="fas fa-credit-card"></i> View Payments
+    </a>
+
+</div>
+
+<h3 class="dashboard-section-title" style="margin-top:45px;">Recent Reservations</h3>
+
+<div class="table-card">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Guest</th>
+                <th>Room</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in recent_reservations %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.guest }}</td>
+                <td>{{ r.room.hotel.name }} - {{ r.room.room_number }}</td>
+                <td>{{ r.check_in_date }}</td>
+                <td>{{ r.check_out_date }}</td>
+                <td><span class="badge badge-{{ r.status }}">{{ r.get_status_display }}</span></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No reservations yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

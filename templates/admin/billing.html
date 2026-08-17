@@ -1,0 +1,87 @@
+{% extends 'admin/_shell.html' %}
+{% block title %}Billing{% endblock %}
+
+{% block admin_content %}
+
+<section class="page-header" style="padding:0 0 30px;">
+    <div class="header-flex">
+        <div>
+            <h1>Billing & Payments</h1>
+            <p>All payments processed across reservations.</p>
+        </div>
+    </div>
+</section>
+
+<div class="stat-cards" style="grid-template-columns:repeat(3,1fr);margin-bottom:30px;">
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-indian-rupee-sign"></i></div>
+        <div>
+            <h2>₹{{ total_collected }}</h2>
+            <p>Total Collected</p>
+        </div>
+    </div>
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-circle-check"></i></div>
+        <div>
+            <h2>{{ success_count }}</h2>
+            <p>Successful Payments</p>
+        </div>
+    </div>
+    <div class="stat-card-mini">
+        <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+        <div>
+            <h2>{{ pending_count }}</h2>
+            <p>Pending Payments</p>
+        </div>
+    </div>
+</div>
+
+<div class="table-card">
+
+    <div class="table-top">
+        <form method="GET">
+            <input type="text" name="search" placeholder="Search transaction, guest..." value="{{ search }}">
+            <button class="btn-primary">Search</button>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Guest</th>
+                <th>Reservation</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Paid At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in payments %}
+            <tr>
+                <td>{{ payment.transaction_id|default:"—" }}</td>
+                <td>{{ payment.reservation.guest }}</td>
+                <td>#{{ payment.reservation.id }}</td>
+                <td>₹{{ payment.amount }}</td>
+                <td>{{ payment.get_payment_method_display }}</td>
+                <td>
+                    {% if payment.payment_status == "success" %}
+                        <span class="badge badge-success">Success</span>
+                    {% elif payment.payment_status == "failed" %}
+                        <span class="badge badge-failed">Failed</span>
+                    {% else %}
+                        <span class="badge badge-pending">Pending</span>
+                    {% endif %}
+                </td>
+                <td>{{ payment.paid_at|default:"—" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7">No payments recorded yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

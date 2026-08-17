@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ hotel.name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="detail-section">
+    <div class="container">
+        <div class="detail-card">
+
+            <div class="detail-image">
+<img src="{% static 'images/hotels/hotel1.jpg' %}" alt="{{ hotel.name }}">
+            </div>
+
+            <div class="detail-content">
+                <h1>{{ hotel.name }}</h1>
+                <p class="room-number">{{ hotel.city }}{% if hotel.state %}, {{ hotel.state }}{% endif %}</p>
+
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span>Rating</span>
+                        <strong>{{ hotel.star_rating }} ★</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Address</span>
+                        <strong>{{ hotel.address }}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Contact Email</span>
+                        <strong>{{ hotel.contact_email|default:"—" }}</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Contact Phone</span>
+                        <strong>{{ hotel.contact_phone|default:"—" }}</strong>
+                    </div>
+                </div>
+
+                {% if hotel.description %}
+                    <h3>About</h3>
+                    <p>{{ hotel.description }}</p>
+                {% endif %}
+
+                {% if hotel.rooms.all %}
+                <h3 style="margin-top:25px;">Rooms at this property</h3>
+                <ul class="amenities">
+                    {% for room in hotel.rooms.all %}
+                    <li>
+                        <a href="{% url 'room_detail' room.id %}">
+                            Room {{ room.room_number }} — {{ room.room_type.name }} (₹{{ room.price }}/night)
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+                <div class="detail-buttons">
+                    <a href="{% url 'search_rooms' %}?city={{ hotel.city }}" class="btn-primary">Book a Room</a>
+                    <a href="{% url 'home' %}" class="btn-secondary">Back</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

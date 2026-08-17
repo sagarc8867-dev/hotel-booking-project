@@ -1,0 +1,6 @@
+/* Confirmation page — page-specific tweaks.
+   Shared styles (.card, .badge) already come from base.css. */
+
+.confirmation-actions{
+    margin-top:1rem;
+}
